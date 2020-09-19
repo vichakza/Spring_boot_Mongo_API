@@ -8,4 +8,5 @@ import com.java.basicApi.testApi.model.Customer;
 @Repository
 public interface CustomerRopository extends MongoRepository<Customer, String> {
 	public Customer findByName(String name);
+
 }

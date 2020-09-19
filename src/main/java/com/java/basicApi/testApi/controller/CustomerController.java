@@ -14,7 +14,7 @@ import com.java.basicApi.testApi.model.Customer;
 import com.java.basicApi.testApi.service.CustomerService;
 
 @RestController
-public class MainController {
+public class CustomerController {
 
 	@Autowired
 	private CustomerService cusService;
@@ -58,4 +58,5 @@ public class MainController {
 		cusService.deleteAll();
 		return "Deleted all records";
 	}
+	
 }

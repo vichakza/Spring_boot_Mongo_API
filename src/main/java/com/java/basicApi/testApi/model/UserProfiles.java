@@ -3,22 +3,22 @@ package com.java.basicApi.testApi.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
-public class UserProfile {
+@Document(collection = "userProfiles" )
+public class UserProfiles {
 	@Id
 	private String id;
-	private String userName;
-	private String passWord;
+	private String username;
+	private String password;
 	private String address;
-	private int phone;
+	private String phone;
 	private float salary;
 	private String referCode;
 	private String memberType;
 	
-	public UserProfile(String userName, String passWord, String address, int phone, float salary, String referCode,
-			String memberType) {
-		this.userName = userName;
-		this.passWord = passWord;
+	public UserProfiles(String id, String username, String password, String address, String phone, float salary,
+			String referCode, String memberType) {
+		this.username = username;
+		this.password = password;
 		this.address = address;
 		this.phone = phone;
 		this.salary = salary;
@@ -26,20 +26,26 @@ public class UserProfile {
 		this.memberType = memberType;
 	}
 
-	public String getUserName() {
-		return userName;
+	
+	public UserProfiles() {
+		super();
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+
+	public String getUsername() {
+		return username;
 	}
 
-	public String getPassWord() {
-		return passWord;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public void setPassWord(String passWord) {
-		this.passWord = passWord;
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getAddress() {
@@ -50,11 +56,11 @@ public class UserProfile {
 		this.address = address;
 	}
 
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
@@ -84,9 +90,9 @@ public class UserProfile {
 
 	@Override
 	public String toString() {
-		return "UserProfile [id=" + id + ", userName=" + userName + ", passWord=" + passWord + ", address=" + address
+		return "UserProfile [id=" + id + ", username=" + username + ", password=" + password + ", address=" + address
 				+ ", phone=" + phone + ", salary=" + salary + ", referCode=" + referCode + ", memberType=" + memberType
 				+ "]";
 	}
-
+	
 }
