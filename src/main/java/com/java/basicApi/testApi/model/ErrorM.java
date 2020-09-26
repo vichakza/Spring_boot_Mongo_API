@@ -26,6 +26,10 @@ public class ErrorM {
 		return message;
 	}
 	public void setMessage(String message) {
-		this.message += message +"\n";
+		if(!this.message.isEmpty()) {
+			this.message += ", ";
+		}
+		this.message += message;
+		
 	}
 }

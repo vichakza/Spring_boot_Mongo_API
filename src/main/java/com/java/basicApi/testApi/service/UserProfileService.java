@@ -3,6 +3,7 @@ package com.java.basicApi.testApi.service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -82,9 +83,14 @@ public class UserProfileService {
 	}
 	
 	//Find by name
-	public UserProfiles getByName(String username) {
+	public UserProfiles getByName(String username) { //UserProfiles
 		return userProRepo.findByUsername(username);
 	}
+	
+	//Find by name
+//	public Optional<UserProfiles> getByNameNew(String username) {
+//		return userProRepo.findByUserName(username);
+//	}
 	
 	//Find by id
 	public ResponseEntity<UserProfiles> getById(String id) throws ResourceNotFound {

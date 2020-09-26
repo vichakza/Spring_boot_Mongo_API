@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,6 +43,7 @@ public class UserProfileComtroller {
 	}
 	
 	@RequestMapping(value="/getAllUserProfiles", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('MODERATOR')")
 	public List<UserProfiles> getAll() {
 		return userProService.getAll();
 	}
@@ -54,12 +56,14 @@ public class UserProfileComtroller {
 	}
 	
 	@RequestMapping(value="/deleteUserProfile", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('MODERATOR')") //@PreAuthorize("hasRole('ADMIN')")
 	public String delete(@RequestParam("username") String username) {
 		userProService.delete(username);
 		return "Deleted name : " + username;
 	}
 	
 	@RequestMapping(value="/deleteAllUser", method = RequestMethod.DELETE)
+	@PreAuthorize("hasRole('MODERATOR')")
 	public String deleteAllUserProfile() {
 		userProService.deleteAll();
 		return "Deleted all records";
