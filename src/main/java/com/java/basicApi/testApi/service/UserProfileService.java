@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.java.basicApi.testApi.exception.ResourceNotFound;
@@ -19,6 +20,9 @@ import com.java.basicApi.testApi.repository.UserProfileRepository;
 public class UserProfileService {
 	@Autowired
 	private UserProfileRepository userProRepo;
+	
+	@Autowired
+	PasswordEncoder encoder;
 	
 	//Create operation
 	public ErrorM create(String username, String password, String address, String phone, float salary) {
@@ -93,34 +97,33 @@ public class UserProfileService {
 //	}
 	
 	//Find by id
-	public ResponseEntity<UserProfiles> getById(String id) throws ResourceNotFound {
+	public UserProfiles getById(String id) throws ResourceNotFound {
 		UserProfiles userPro = userProRepo.findById(id)
 				.orElseThrow(() -> new ResourceNotFound("Error, username Not found id => " + id));
-		return ResponseEntity.ok().body(userPro);
+		return userPro;
 	}
 	
 	//Update operation
-	public ErrorM update(String username, String password, String address, String phone, float salary) {
+	public ErrorM update(UserProfiles userProfiles) throws ResourceNotFound { //String username, String password, String address, String phone, float salary
+		
 		String msg = "";
 		ErrorM error = new ErrorM();
-		String memberType = CheckMemberType(salary);
+		String memberType = CheckMemberType(userProfiles.getSalary());
 		if("Draft".equals(memberType)) {
 			msg = "please enter salary more that 15,000.0 Bath";
 			error.setCode("1");
 			error.setMessage(msg);
 		}
 		
-		UserProfiles userPro = userProRepo.findByUsername(username);
-		userPro.setPassword(password);
-		userPro.setAddress(address);
-		userPro.setPhone(phone);
-		userPro.setSalary(salary);
-		userPro.setMemberType(memberType);
-		
-		if(!"1".equals(error.getCode())){
-			userProRepo.save(userPro);
-		}
-		
+		System.out.println("------------- userProfiles : " + userProfiles.toString());
+		userProfiles.setPassword(encoder.encode(userProfiles.getPassword()));
+		userProfiles.setMemberType(memberType);
+		System.out.println("--after update- userProfiles : " + userProfiles.toString());
+			
+			if(!"1".equals(error.getCode())){
+				userProRepo.save(userProfiles);
+			}
+			
 		return error;
 	}
 	
